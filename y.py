@@ -22,7 +22,7 @@ import urllib2
 import oauth2
 API_HOST = 'api.yelp.com'
 DEFAULT_TERM = 'Jacket'
-DEFAULT_LOCATION = 'New York, NY'
+DEFAULT_LOCATION = 'San Jose, CA'
 SEARCH_LIMIT = 3
 SEARCH_PATH = '/v2/search/'
 BUSINESS_PATH = '/v2/business/'
