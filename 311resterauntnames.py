@@ -5,7 +5,7 @@ import operator
 f = open(sys.argv[1])
 reader = csv.reader(f)
 line1 = next(reader)
-f1 = open('dump.csv','w')
+f1 = open('names.csv','w')
 name_write = csv.writer(f1,delimiter = ',')
 name = {}
 for i in reader:

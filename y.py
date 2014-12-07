@@ -1,18 +1,7 @@
 
 
 # -*- coding: utf-8 -*-
-"""
-Yelp API v2.0 code sample.
-This program demonstrates the capability of the Yelp API version 2.0
-by using the Search API to query for businesses by a search term and location,
-and the Business API to query additional information about the top result
-from the search query.
-Please refer to http://www.yelp.com/developers/documentation for the API documentation.
-This program requires the Python oauth2 library, which you can install via:
-`pip install -r requirements.txt`.
-Sample usage of the program:
-`python sample.py --term="bars" --location="San Francisco, CA"`
-"""
+
 import argparse
 import json
 import pprint
@@ -20,9 +9,19 @@ import sys
 import urllib
 import urllib2
 import oauth2
+import csv
+
+f = open('names.csv','r')
+reader = csv.reader(f, delimiter = ',')
+names = []
+for i in reader:
+	names.append(i[0])
+f.close()
+
 API_HOST = 'api.yelp.com'
 DEFAULT_TERM = 'Jacket'
-DEFAULT_LOCATION = 'San Jose, CA'
+DEFAULT_LOCATION = 'New York, NY'
+
 SEARCH_LIMIT = 3
 SEARCH_PATH = '/v2/search/'
 BUSINESS_PATH = '/v2/business/'
@@ -134,17 +133,18 @@ def query_api(term, location):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+	for DEFAULT_TERM in names:
+	    parser = argparse.ArgumentParser()
 
-    parser.add_argument('-q', '--term', dest='term', default=DEFAULT_TERM, type=str, help='Search term (default: %(default)s)')
-    parser.add_argument('-l', '--location', dest='location', default=DEFAULT_LOCATION, type=str, help='Search location (default: %(default)s)')
+	    parser.add_argument('-q', '--term', dest='term', default=DEFAULT_TERM, type=str, help='Search term (default: %(default)s)')
+	    parser.add_argument('-l', '--location', dest='location', default=DEFAULT_LOCATION, type=str, help='Search location (default: %(default)s)')
 
-    input_values = parser.parse_args()
+	    input_values = parser.parse_args()
 
-    try:
-        query_api(input_values.term, input_values.location)
-    except urllib2.HTTPError as error:
-        sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
+	    try:
+	        query_api(input_values.term, input_values.location)
+	    except urllib2.HTTPError as error:
+	        sys.exit('Encountered HTTP error {0}. Abort program.'.format(error.code))
 
 
 if __name__ == '__main__':
