@@ -1,6 +1,7 @@
 import rauth
 import time
 import csv
+import re
 
 f = open('names.csv','r')
 reader = csv.reader(f, delimiter = ',')
@@ -20,10 +21,23 @@ def main():
 		for i in api_calls:
 			#print i.keys()
 			for j in i['businesses']:
+				categories = {}
 				for k in j.keys():
-					if k == "rating" or k == "review_count" or k == "name" or k == "categories" or k == "location" or k == "id":
+					if k == "rating" or k == "review_count" or k == "name" or k == "categories":
 						try:
-							print j[k],",", 
+							temp = str(j[k])
+							if k == 'categories':
+
+								type_cuisine = str()
+								for list1 in j[k]:
+									for list2 in list1:
+										type_cuisine = type_cuisine + ";" + list2
+
+										
+								print type_cuisine[1:],
+							else:
+								
+								print temp,",", 
 						except:
 							continue
 				print
